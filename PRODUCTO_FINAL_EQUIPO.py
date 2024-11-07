@@ -17,6 +17,9 @@ menu_bar.pack(side="top", fill="x")
 
 for i in range(1, 6):
     button = tk.Button(menu_bar, text=f"Botón {i}", command=on_button_click)
-    button.pack(side="left")
+    button.pack(side="left", expand=True, fill="both")
+
+# Configurar el tamaño de la ventana
+root.geometry("600x300")
 
 root.mainloop()
