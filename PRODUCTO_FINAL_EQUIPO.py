@@ -20,6 +20,6 @@ for i in range(1, 6):
     button.pack(side="left", expand=True, fill="both")
 
 # Configurar el tamaño de la ventana
-root.geometry("600x300")
+root.geometry("600x500")
 
 root.mainloop()
