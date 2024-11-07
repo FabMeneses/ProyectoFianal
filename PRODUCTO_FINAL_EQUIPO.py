@@ -8,7 +8,7 @@ root = tk.Tk()
 root.title("Ventana con Barra de Menú")
 
 # Configurar el fondo de la ventana
-background_image = tk.PhotoImage(file="imagenes/dammau.png")
+background_image = tk.PhotoImage(file="imagenes/BG.png")
 background_label = tk.Label(root, image=background_image)
 background_label.place(relwidth=1, relheight=1)
 
