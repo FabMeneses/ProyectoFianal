@@ -1,5 +1,51 @@
 import tkinter as tk
 from tkinter import font
+import subprocess
+# Importar los módulos correspondientes
+import hilos_hilos
+import hilos_con_argumentos
+import hilos_con_funcion_tarea
+import hilos_sincronizados
+import mario_bros_ruleta
+import mensajes_cliente_servidor
+import tcp_cliente_servidor
+import udp_cliente_servidor
+import comunicacion_directa
+import comunicacion_indirecta
+import autenticacion_aguila
+import condicion_de_carrera
+import sincronizacion_de_semaforos
+import semaforos_cliente_servidor
+import barbero_dormilon
+import sala_de_chat
+import futuro_promesa
+import productor_consumidor
+import actores
+import reactor_y_proactor
+
+# Diccionario para mapear opciones a funciones
+opciones_funciones = {
+    "Hilos-Hilos": lambda: mostrar_terminal("hilos_hilos.py"),
+    "Hilos con argumentos": lambda: hilos_con_argumentos.ejecutar() if hasattr(hilos_con_argumentos, 'ejecutar') else print("Función no encontrada"),
+    "Hilos con función tarea": lambda: hilos_con_funcion_tarea.ejecutar() if hasattr(hilos_con_funcion_tarea, 'ejecutar') else print("Función no encontrada"),
+    "Hilos sincronizados": lambda: hilos_sincronizados.ejecutar() if hasattr(hilos_sincronizados, 'ejecutar') else print("Función no encontrada"),
+    "Mario Bros Ruleta": lambda: mario_bros_ruleta.ejecutar() if hasattr(mario_bros_ruleta, 'ejecutar') else print("Función no encontrada"),
+    "Mensajes Cliente/Servidor": lambda: mensajes_cliente_servidor.ejecutar() if hasattr(mensajes_cliente_servidor, 'ejecutar') else print("Función no encontrada"),
+    "TCP Cliente/Servidor": lambda: tcp_cliente_servidor.ejecutar() if hasattr(tcp_cliente_servidor, 'ejecutar') else print("Función no encontrada"),
+    "UDP Cliente/Servidor": lambda: udp_cliente_servidor.ejecutar() if hasattr(udp_cliente_servidor, 'ejecutar') else print("Función no encontrada"),
+    "Comunicación directa": lambda: comunicacion_directa.ejecutar() if hasattr(comunicacion_directa, 'ejecutar') else print("Función no encontrada"),
+    "Comunicación indirecta": lambda: comunicacion_indirecta.ejecutar() if hasattr(comunicacion_indirecta, 'ejecutar') else print("Función no encontrada"),
+    "Autenticación Águila": lambda: autenticacion_aguila.ejecutar() if hasattr(autenticacion_aguila, 'ejecutar') else print("Función no encontrada"),
+    "Condición de carrera": lambda: condicion_de_carrera.ejecutar() if hasattr(condicion_de_carrera, 'ejecutar') else print("Función no encontrada"),
+    "Sincronización de semáforos": lambda: sincronizacion_de_semaforos.ejecutar() if hasattr(sincronizacion_de_semaforos, 'ejecutar') else print("Función no encontrada"),
+    "Semáforos Cliente/Servidor": lambda: semaforos_cliente_servidor.ejecutar() if hasattr(semaforos_cliente_servidor, 'ejecutar') else print("Función no encontrada"),
+    "Barbero dormilón": lambda: barbero_dormilon.ejecutar() if hasattr(barbero_dormilon, 'ejecutar') else print("Función no encontrada"),
+    "SALA DE CHAT (local o con IP)": lambda: sala_de_chat.ejecutar() if hasattr(sala_de_chat, 'ejecutar') else print("Función no encontrada"),
+    "Futuro Promesa": lambda: futuro_promesa.ejecutar() if hasattr(futuro_promesa, 'ejecutar') else print("Función no encontrada"),
+    "Productor-Consumidor": lambda: productor_consumidor.main() if hasattr(productor_consumidor, 'main') else print("Función no encontrada"),
+    "Actores": lambda: actores.ejecutar() if hasattr(actores, 'ejecutar') else print("Función no encontrada"),
+    "Reactor y Proactor": lambda: reactor_y_proactor.ejecutar() if hasattr(reactor_y_proactor, 'ejecutar') else print("Función no encontrada")
+}
 
 # Función para abrir un submenú en una nueva ventana con botones específicos
 def abrir_submenu(titulo, opciones):
@@ -20,88 +66,27 @@ def abrir_submenu(titulo, opciones):
 
 # Función para ejecutar el código correspondiente al botón seleccionado
 def ejecutar_accion(opcion):
-    print(f"Ejecutando {opcion}...")
-    # Aquí colocarías el código correspondiente para cada opción
-    # Por ejemplo, si la opción es "Hilos-Hilos":
-    if opcion == "Hilos-Hilos":
-        print("Ejecutando Hilos-Hilos...")
-        # Código de "Hilos-Hilos"
-    
-    elif opcion == "Hilos con argumentos":
-        print("Ejecutando Hilos con argumentos...")
-        # Código de "Hilos con argumentos"
-    
-    elif opcion == "Hilos con función tarea":
-        print("Ejecutando Hilos con función tarea...")
-        # Código de "Hilos con función tarea"
-    
-    elif opcion == "Hilos sincronizados":
-        print("Ejecutando Hilos sincronizados...")
-        # Código de "Hilos sincronizados"
-    
-    elif opcion == "Mario Bros Ruleta":
-        print("Ejecutando Mario Bros Ruleta...")
-        # Código de "Mario Bros Ruleta"
-    
-    elif opcion == "Mensajes Cliente/Servidor":
-        print("Ejecutando Mensajes Cliente/Servidor...")
-        # Código de "Mensajes Cliente/Servidor"
-    
-    elif opcion == "TCP Cliente/Servidor":
-        print("Ejecutando TCP Cliente/Servidor...")
-        # Código de "TCP Cliente/Servidor"
-    
-    elif opcion == "UDP Cliente/Servidor":
-        print("Ejecutando UDP Cliente/Servidor...")
-        # Código de "UDP Cliente/Servidor"
-    
-    elif opcion == "Comunicación directa":
-        print("Ejecutando Comunicación directa...")
-        # Código de "Comunicación directa"
-    
-    elif opcion == "Comunicación indirecta":
-        print("Ejecutando Comunicación indirecta...")
-        # Código de "Comunicación indirecta"
-    
-    elif opcion == "Autenticación Águila":
-        print("Ejecutando Autenticación Águila...")
-        # Código de "Autenticación Águila"
-    
-    elif opcion == "Condición de carrera":
-        print("Ejecutando Condición de carrera...")
-        # Código de "Condición de carrera"
-    
-    elif opcion == "Sincronización de semáforos":
-        print("Ejecutando Sincronización de semáforos...")
-        # Código de "Sincronización de semáforos"
-    
-    elif opcion == "Semáforos Cliente/Servidor":
-        print("Ejecutando Semáforos Cliente/Servidor...")
-        # Código de "Semáforos Cliente/Servidor"
-    
-    elif opcion == "Barbero dormilón":
-        print("Ejecutando Barbero dormilón...")
-        # Código de "Barbero dormilón"
-    
-    elif opcion == "SALA DE CHAT (local o con IP)":
-        print("Ejecutando SALA DE CHAT...")
-        # Código de "SALA DE CHAT"
-    
-    elif opcion == "Futuro Promesa":
-        print("Ejecutando Futuro Promesa...")
-        # Código de "Futuro Promesa"
-    
-    elif opcion == "Productor-Consumidor":
-        print("Ejecutando Productor-Consumidor...")
-        # Código de "Productor-Consumidor"
-    
-    elif opcion == "Actores":
-        print("Ejecutando Actores...")
-        # Código de "Actores"
-    
-    elif opcion == "Reactor y Proactor":
-        print("Ejecutando Reactor y Proactor...")
-        # Código de "Reactor y Proactor"
+    if opcion in opciones_funciones:
+        opciones_funciones[opcion]()
+
+def mostrar_terminal(script):
+    terminal_ventana = tk.Toplevel(root)
+    terminal_ventana.title("Terminal")
+    terminal_ventana.geometry("600x400")
+    terminal_ventana.configure(bg="#2c3e50")
+
+    terminal_texto = tk.Text(terminal_ventana, bg="black", fg="white", font=("Helvetica", 12))
+    terminal_texto.pack(fill="both", expand=True)
+
+    proceso = subprocess.Popen(["python", script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    def leer_salida():
+        for linea in iter(proceso.stdout.readline, ''):
+            terminal_texto.insert(tk.END, linea)
+            terminal_texto.see(tk.END)
+        proceso.stdout.close()
+
+    root.after(100, leer_salida)
 
 # Función para cerrar la aplicación
 def salir():
@@ -123,13 +108,15 @@ root.title("Programación Concurrente UPP SFTW_07_03")
 root.geometry("800x600")
 root.configure(bg="#34495e")  # Fondo en gris oscuro
 
+# Configurar el fondo de la ventana
+background_image = tk.PhotoImage(file="Imagenes/BG.png")
+background_label = tk.Label(root, image=background_image)
+background_label.place(relwidth=1, relheight=1)
+
 # Crear la barra de menú superior
 menu_bar = tk.Frame(root, bg="#2c3e50")  # Fondo de la barra en gris oscuro
 menu_bar.pack(side="top", fill="x")
-# Configurar el fondo de la ventana
-#background_image = tk.PhotoImage(file="imagenes/BG.png")
-#background_label = tk.Label(root, image=background_image)
-#background_label.place(relwidth=1, relheight=1)
+
 # Fuente personalizada para los botones de menú
 menu_font = font.Font(family="Helvetica", size=12, weight="bold")
 
