@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import font
 import subprocess
-# Importar los módulos correspondientes
+import os
 import hilos_hilos
 import hilos_con_argumentos
 import hilos_con_funcion_tarea
@@ -23,9 +23,13 @@ import productor_consumidor
 import actores
 import reactor_y_proactor
 
+# Función para ejecutar el script hilos_hilos.py
+def ejecutar_hilos_hilos():
+    subprocess.run(["python", "hilos_hilos.py"])
+
 # Diccionario para mapear opciones a funciones
 opciones_funciones = {
-    "Hilos-Hilos": lambda: mostrar_terminal("hilos_hilos.py"),
+    "Hilos-Hilos": lambda: ejecutar_hilos_hilos(),
     "Hilos con argumentos": lambda: hilos_con_argumentos.ejecutar() if hasattr(hilos_con_argumentos, 'ejecutar') else print("Función no encontrada"),
     "Hilos con función tarea": lambda: hilos_con_funcion_tarea.ejecutar() if hasattr(hilos_con_funcion_tarea, 'ejecutar') else print("Función no encontrada"),
     "Hilos sincronizados": lambda: hilos_sincronizados.ejecutar() if hasattr(hilos_sincronizados, 'ejecutar') else print("Función no encontrada"),
@@ -47,54 +51,35 @@ opciones_funciones = {
     "Reactor y Proactor": lambda: reactor_y_proactor.ejecutar() if hasattr(reactor_y_proactor, 'ejecutar') else print("Función no encontrada")
 }
 
-# Función para abrir un submenú en una nueva ventana con botones específicos
-def abrir_submenu(titulo, opciones):
-    submenu = tk.Toplevel(root)
-    submenu.title(titulo)
-    submenu.geometry("400x300")
-    submenu.configure(bg="#2c3e50")  # Fondo de submenú en gris oscuro
-    
+# Función para mostrar el contenido del submenú en la misma ventana
+def mostrar_submenu(titulo, opciones):
+    # Limpiar el contenido actual de la ventana principal
+    for widget in root.winfo_children():
+        if widget != menu_bar:
+            widget.destroy()
+
     # Crear un frame para contener los botones del submenú
-    submenu_frame = tk.Frame(submenu, bg="#2c3e50")
+    submenu_frame = tk.Frame(root, bg="#2c3e50")
     submenu_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
     # Crear un botón por cada opción del submenú con estilo plano
     for opcion in opciones:
         boton = tk.Button(submenu_frame, text=opcion, command=lambda o=opcion: ejecutar_accion(o),
                           bg="#3498db", fg="white", font=("Helvetica", 12, "bold"), bd=0, padx=10, pady=5)
-        boton.pack(side="top", expand=True, fill="x", padx=5, pady=5)
+        boton.pack(side="top", padx=5, pady=5)
 
 # Función para ejecutar el código correspondiente al botón seleccionado
 def ejecutar_accion(opcion):
     if opcion in opciones_funciones:
         opciones_funciones[opcion]()
 
-def mostrar_terminal(script):
-    terminal_ventana = tk.Toplevel(root)
-    terminal_ventana.title("Terminal")
-    terminal_ventana.geometry("600x400")
-    terminal_ventana.configure(bg="#2c3e50")
-
-    terminal_texto = tk.Text(terminal_ventana, bg="black", fg="white", font=("Helvetica", 12))
-    terminal_texto.pack(fill="both", expand=True)
-
-    proceso = subprocess.Popen(["python", script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-
-    def leer_salida():
-        for linea in iter(proceso.stdout.readline, ''):
-            terminal_texto.insert(tk.END, linea)
-            terminal_texto.see(tk.END)
-        proceso.stdout.close()
-
-    root.after(100, leer_salida)
-
 # Función para cerrar la aplicación
 def salir():
     root.quit()
 
-# Función para mostrar ayuda
+# Función para mostrar ayuda en la misma ventana
 def mostrar_ayuda():
-    abrir_submenu("Ayuda", ["Nombres de Integrantes:\n- Fabricio Meneses Avila\n- Jorge Ruiz Diaz\n- Josefa Francisco Hernandez\n- Diego Daniel Magdaleno Medina\n- GaboGabriel"])
+    mostrar_submenu("Ayuda", ["Nombres de Integrantes:\n- Fabricio Meneses Avila\n- Jorge Ruiz Diaz\n- Josefa Francisco Hernandez\n- Diego Daniel Magdaleno Medina\n- GaboGabriel"])
 
 # Opciones para cada submenú
 hilos_opciones = ["Hilos-Hilos", "Hilos con argumentos", "Hilos con función tarea", "Hilos sincronizados", "Mario Bros Ruleta"]
@@ -105,10 +90,12 @@ patrones_opciones = ["Futuro Promesa", "Productor-Consumidor", "Actores", "React
 # Crear la ventana principal
 root = tk.Tk()
 root.title("Programación Concurrente UPP SFTW_07_03")
+
 root.geometry("800x600")
 root.configure(bg="#34495e")  # Fondo en gris oscuro
+root.state('zoomed')  # Maximizar la ventana
 
-# Configurar el fondo de la ventana
+# Configurar el fondo de la 
 background_image = tk.PhotoImage(file="Imagenes/BG.png")
 background_label = tk.Label(root, image=background_image)
 background_label.place(relwidth=1, relheight=1)
@@ -120,13 +107,13 @@ menu_bar.pack(side="top", fill="x")
 # Fuente personalizada para los botones de menú
 menu_font = font.Font(family="Helvetica", size=12, weight="bold")
 
-# Crear botones de menú principal que abren submenús con estilo moderno
+# Crear botones de menú principal que muestran submenús en la misma ventana con estilo moderno
 boton_estilo = {"bg": "#3498db", "fg": "white", "font": menu_font, "bd": 0, "padx": 10, "pady": 5}
 
-tk.Button(menu_bar, text="Hilos", command=lambda: abrir_submenu("Hilos", hilos_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
-tk.Button(menu_bar, text="Sockets", command=lambda: abrir_submenu("Sockets", sockets_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
-tk.Button(menu_bar, text="Semáforos", command=lambda: abrir_submenu("Semáforos", semaforos_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
-tk.Button(menu_bar, text="Patrones", command=lambda: abrir_submenu("Patrones", patrones_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
+tk.Button(menu_bar, text="Hilos", command=lambda: mostrar_submenu("Hilos", hilos_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
+tk.Button(menu_bar, text="Sockets", command=lambda: mostrar_submenu("Sockets", sockets_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
+tk.Button(menu_bar, text="Semáforos", command=lambda: mostrar_submenu("Semáforos", semaforos_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
+tk.Button(menu_bar, text="Patrones", command=lambda: mostrar_submenu("Patrones", patrones_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
 tk.Button(menu_bar, text="Ayuda", command=mostrar_ayuda, **boton_estilo).pack(side="left", expand=True, fill="both")
 tk.Button(menu_bar, text="Salir", command=salir, **boton_estilo).pack(side="left", expand=True, fill="both")
 

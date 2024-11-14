@@ -1,13 +1,22 @@
-import threading  # Permite crear y manejar hilos en Python
+import threading
+import tkinter as tk
 
-# Primer Programa con Hilos en Python
-
+# Función que se ejecutará en el hilo
 def Primer_Hilo():
-    print("Mi Primer Programa con Hilos en Python")
+    label.config(text="Mi Primer Programa con Hilos en Python")
 
-if __name__ =='__main__': # para que se ejecute el script
+if __name__ == '__main__':
+    # Crear la ventana principal de tkinter
+    root = tk.Tk()
+    root.title("Programa con Hilos")
+    
+    # Crear y empaquetar una etiqueta en la ventana
+    label = tk.Label(root, text="")
+    label.pack(pady=20)
+    
+    # Crear y empezar el hilo
     thread = threading.Thread(target=Primer_Hilo)
-    # el código que se va ejecutar en segundo plano
-    #  se genera un nuevo objeto, donde thread es una clase
-    #  y a esta clase, podemos colocar diferentes valores a sus parámetros
-    thread.start()  # utilizamos el método start y va ejecuta el targer en segundo plano
+    thread.start()
+    
+    # Iniciar el bucle principal de tkinter
+    root.mainloop()
