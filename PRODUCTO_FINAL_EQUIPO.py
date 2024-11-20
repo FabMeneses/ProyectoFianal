@@ -79,7 +79,7 @@ def salir():
 
 # Función para mostrar ayuda en la misma ventana
 def mostrar_ayuda():
-    mostrar_submenu("Ayuda", ["Nombres de Integrantes:\n- Fabricio Meneses Avila\n- Jorge Ruiz Diaz\n- Josefa Francisco Hernandez\n- Diego Daniel Magdaleno Medina\n- GaboGabriel"])
+    mostrar_submenu("Ayuda", ["Nombres de Integrantes:\n- Fabricio Meneses Avila\n- Jorge Ruiz Diaz\n- Josefa Francisco Hernandez\n- Diego Daniel Magdaleno Medina\n- Angel Gabriel Castillo Sanchez"])
 
 # Opciones para cada submenú
 hilos_opciones = ["Hilos-Hilos", "Hilos con argumentos", "Hilos con función tarea", "Hilos sincronizados", "Mario Bros Ruleta"]
