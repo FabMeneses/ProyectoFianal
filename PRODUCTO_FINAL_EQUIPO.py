@@ -42,7 +42,7 @@ opciones_funciones = {
     "Autenticación Águila": lambda: autenticacion_aguila.ejecutar() if hasattr(autenticacion_aguila, 'ejecutar') else print("Función no encontrada"),
     "Condición de carrera": lambda: condicion_de_carrera.ejecutar() if hasattr(condicion_de_carrera, 'ejecutar') else print("Función no encontrada"),
     "Sincronización de semáforos": lambda: sincronizacion_de_semaforos.ejecutar() if hasattr(sincronizacion_de_semaforos, 'ejecutar') else print("Función no encontrada"),
-    "Semáforos Cliente/Servidor": lambda: semaforos_cliente_servidor.ejecutar() if hasattr(semaforos_cliente_servidor, 'ejecutar') else print("Función no encontrada"),
+    "Semáforos Cliente/Servidor": lambda: semaforos_cliente_servidor.interfaz_semaforos() if hasattr(semaforos_cliente_servidor, 'interfaz_semaforos') else print("Función no encontrada"),
     "Barbero dormilón": lambda: barbero_dormilon.ejecutar() if hasattr(barbero_dormilon, 'ejecutar') else print("Función no encontrada"),
     "SALA DE CHAT (local o con IP)": lambda: sala_de_chat.ejecutar() if hasattr(sala_de_chat, 'ejecutar') else print("Función no encontrada"),
     "Futuro Promesa": lambda: futuro_promesa.ejecutar() if hasattr(futuro_promesa, 'ejecutar') else print("Función no encontrada"),
