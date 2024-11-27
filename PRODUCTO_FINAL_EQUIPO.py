@@ -23,6 +23,62 @@ import productor_consumidor
 import actores
 import reactor_y_proactor
 
+from tkinter import font, Toplevel
+from PIL import Image, ImageTk #pip install PyMuPDF pillow
+import fitz  # PyMuPDF
+
+# Ruta específica del archivo PDF
+PDF_PATH = r"Documentacion\pdfproyectofinal.pdf"  # Cambia esta ruta a la ubicación de tu PDF
+
+# Función para mostrar documentación en un visor PDF
+def mostrar_documentacion():
+    ventana_pdf = Toplevel(root)
+    ventana_pdf.title("Documentación")
+    ventana_pdf.geometry("650x600")
+
+    # Crear marco para Canvas y scrollbars
+    frame = tk.Frame(ventana_pdf)
+    frame.pack(fill="both", expand=True)
+
+    canvas = tk.Canvas(frame, bg="white")
+    scroll_y = tk.Scrollbar(frame, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=scroll_y.set)
+
+    scroll_y.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
+
+    # Marco interior para colocar imágenes
+    inner_frame = tk.Frame(canvas, bg="white")
+    canvas.create_window((0, 0), window=inner_frame, anchor="nw")
+
+    def load_pdf():
+        # Cargar el documento PDF
+        try:
+            doc = fitz.open(PDF_PATH)
+            images = []
+
+            for page_number in range(len(doc)):
+                page = doc.load_page(page_number)
+                pix = page.get_pixmap()
+                image = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+                photo = ImageTk.PhotoImage(image)
+                images.append(photo)
+
+                # Crear un label por página y agregarlo al marco interior
+                label = tk.Label(inner_frame, image=photo, bg="white")
+                label.image = photo  # Prevenir que Python borre la referencia
+                label.pack()
+
+            # Ajustar el scrollregion al contenido
+            inner_frame.update_idletasks()
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        except Exception as e:
+            tk.Label(inner_frame, text=f"Error al cargar el PDF:\n{e}", fg="red", bg="white").pack()
+
+    # Cargar el PDF directamente al abrir la ventana
+    load_pdf()
+
 # Función para ejecutar el script hilos_hilos.py
 def ejecutar_hilos_hilos():
     subprocess.run(["python", "hilos_hilos.py"])
@@ -114,6 +170,7 @@ tk.Button(menu_bar, text="Hilos", command=lambda: mostrar_submenu("Hilos", hilos
 tk.Button(menu_bar, text="Sockets", command=lambda: mostrar_submenu("Sockets", sockets_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
 tk.Button(menu_bar, text="Semáforos", command=lambda: mostrar_submenu("Semáforos", semaforos_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
 tk.Button(menu_bar, text="Patrones", command=lambda: mostrar_submenu("Patrones", patrones_opciones), **boton_estilo).pack(side="left", expand=True, fill="both")
+tk.Button(menu_bar, text="Documentación", command=mostrar_documentacion, **boton_estilo).pack(side="left", expand=True, fill="both")
 tk.Button(menu_bar, text="Ayuda", command=mostrar_ayuda, **boton_estilo).pack(side="left", expand=True, fill="both")
 tk.Button(menu_bar, text="Salir", command=salir, **boton_estilo).pack(side="left", expand=True, fill="both")
 
